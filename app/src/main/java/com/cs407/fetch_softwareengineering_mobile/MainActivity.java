@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 filteredItems.add(item);
             }
         }
-        //filteredItems.sort(Comparator.comparingInt(Item::getListId).thenComparing(Item::getName));
+
         filteredItems.sort(Comparator.comparingInt(Item::getListId)
                 .thenComparing(item -> {
                     String name = item.getName().replaceAll("\\D", "");
