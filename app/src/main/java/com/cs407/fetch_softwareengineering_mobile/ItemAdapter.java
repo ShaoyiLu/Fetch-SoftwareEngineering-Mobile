@@ -29,7 +29,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Item item = items.get(position);
-        holder.textView.setText("List ID: " + item.getListId() + ", Name: " + item.getName());
+        String formattedText = context.getString(R.string.item_format, item.getListId(), item.getName());
+        holder.textView.setText(formattedText);
     }
 
     @Override

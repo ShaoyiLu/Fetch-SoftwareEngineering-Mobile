@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Fetch-SoftwareEngineering-Mobile</string>
+    <string name="item_format">List ID: %1$d, Name: %2$s</string>
 </resources>
