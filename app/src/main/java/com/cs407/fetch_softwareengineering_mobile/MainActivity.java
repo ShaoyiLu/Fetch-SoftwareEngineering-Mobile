@@ -1,5 +1,6 @@
 package com.cs407.fetch_softwareengineering_mobile;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -38,21 +39,20 @@ public class MainActivity extends AppCompatActivity {
         Request request = new Request.Builder().url("https://fetch-hiring.s3.amazonaws.com/hiring.json").build();
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 // Handle the error
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
                     String jsonData = response.body().string();
                     Gson gson = new Gson();
                     Type listType = new TypeToken<ArrayList<Item>>() {}.getType();
                     List<Item> items = gson.fromJson(jsonData, listType);
                     List<Item> processedItems = processItems(items);
-                    runOnUiThread(() -> {
-                        recyclerView.setAdapter(new ItemAdapter(processedItems, MainActivity.this));
-                    });
+                    runOnUiThread(() ->
+                        recyclerView.setAdapter(new ItemAdapter(processedItems, MainActivity.this)));
                 }
             }
         });
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         //filteredItems.sort(Comparator.comparingInt(Item::getListId).thenComparing(Item::getName));
         filteredItems.sort(Comparator.comparingInt(Item::getListId)
                 .thenComparing(item -> {
-                    String name = item.getName().replaceAll("[^\\d]", "");
+                    String name = item.getName().replaceAll("\\D", "");
                     return Integer.parseInt(name);
                 }));
 
