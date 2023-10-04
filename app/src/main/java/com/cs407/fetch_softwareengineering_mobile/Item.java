@@ -1,9 +1,9 @@
 package com.cs407.fetch_softwareengineering_mobile;
 
 public class Item {
-    private int id;
-    private int listId;
-    private String name;
+    private final int id;
+    private final int listId;
+    private final String name;
 
     public Item(int id, int listId, String name) {
         this.id = id;
